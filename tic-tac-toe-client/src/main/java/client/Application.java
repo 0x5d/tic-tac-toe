@@ -6,6 +6,8 @@ import java.util.Scanner;
 
 import org.springframework.web.client.RestTemplate;
 
+import server.TicTacToeLocalServer;
+
 public class Application {
 
     public static void main(String args[]) {
@@ -26,17 +28,18 @@ public class Application {
 		}
     	Match match = restTemplate.getForObject("http://127.0.0.1:8080/GameMatching?ip="+ip+"&port="+port, Match.class);
     	if(match==null){
-        	/*
         	int serverPort = Integer.parseInt(port);
         	String serverIp = "127.0.0.1";
         	System.out.println("init");
         	TicTacToeLocalServer localServer = new TicTacToeLocalServer(serverPort);
         	localServer.start();
-        	TicTacToeClient client = new TicTacToeClient(serverPort, serverIp);
-        	*/
-    		System.out.println("Priemro");
+        	TicTacToePlayerSocket client = new TicTacToePlayerSocket(serverIp, serverPort);
+    		client.run(true);
     	}else{
-    		System.out.println("ip = "+match.getIp()+" port = "+match.getPort());
+    		int serverPort = Integer.parseInt(match.getPort());
+        	String serverIp = match.getIp();
+    		TicTacToePlayerSocket client = new TicTacToePlayerSocket(serverIp, serverPort);
+    		client.run(false);
     	}
     	/*
     	int serverPort = 9998;
