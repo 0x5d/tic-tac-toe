@@ -6,7 +6,7 @@ public class TriquiGame implements ITriquiGame{
     String X = "[X]";
     String O = "[O]";
     String E = "[ ]";
-    
+    int moves = 0;
     String[] board = new String[9];
     
     public void Start() {
@@ -44,11 +44,12 @@ public class TriquiGame implements ITriquiGame{
 	                board[pos] = O;
 	                turn=!turn;
 	            }
+	            moves ++;
 	        } else{
-	            result = 2;
+	            result = 0;
 	        }
         }else{
-        	result = 3;
+        	result = 2;
         }
         return result;
     }
@@ -133,5 +134,13 @@ public class TriquiGame implements ITriquiGame{
             result = O;
         
         return result;
-    }    
+    }
+
+	public boolean CanPlay() {
+		boolean result = false;
+		if(TestWinner().equals("N")&&moves<9){
+			result = true;
+		}
+		return result;
+	}    
 }

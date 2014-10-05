@@ -36,17 +36,20 @@ public class TicTacToeSocketServer {
 	    try {
 	    	player1 = true;
 	        String cmd = recvRequest();
-	        System.out.println("Comando: "+cmd);
 	        String response;
 	        while (!cmd.equals("QUIT")) {
 	            if (cmd.equals("START")) {
 	                triqui.Start();
 	            } else if (cmd.equals("PLAY")) {
-	                int pos = Integer.parseInt(command[1])-1;
-	                int res = triqui.Play(pos);
-	                System.out.println(pos);
-	                response = ""+res;
-	                sendResponse(response);
+	            	try{
+	            		int pos = Integer.parseInt(command[1])-1;
+	                	int res = triqui.Play(pos);
+	                	System.out.println(pos);
+	                	response = ""+res;
+	            	}catch(Exception e){
+	            		response = "0";
+	            	}
+            		sendResponse(response);
 	            } else if (cmd.equals("PLAYER")) {
 	                response = triqui.Player();
 	                sendResponse(response);
@@ -64,9 +67,11 @@ public class TicTacToeSocketServer {
 	            	if(endGame == 2){
 	            		break;
 	            	}
+	            }else if(cmd.equals("CANPLAY")){
+	            	response = Boolean.toString(triqui.CanPlay());
+	                sendResponse(response);
 	            }
 	            cmd = recvRequest();
-	            System.out.println("Comando: "+cmd);
 	        }
 	        c1.close();
 	        c1 = null;

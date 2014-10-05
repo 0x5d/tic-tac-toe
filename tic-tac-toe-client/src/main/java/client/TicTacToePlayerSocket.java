@@ -34,7 +34,7 @@ public class TicTacToePlayerSocket {
         String player = null;
         String board = null;
 
-        while (winner.equals("N") && contplay < 9) {
+        while (winner.equals("N") && contplay < 5) {
             
             //triqui.send("PLAYER,");
             //player = triqui.recv();
@@ -47,6 +47,11 @@ public class TicTacToePlayerSocket {
             System.out.println("\nSU TURNO: ");
             System.out.println(board);
             do {
+            	triqui.send("CANPLAY");
+            	boolean b = Boolean.parseBoolean(triqui.recv());
+            	if(!b){
+            		break;
+            	}
                 System.out.print("Posicion = ");
                 String pos = keyboard();
                 
